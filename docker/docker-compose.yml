@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  docker-sample:
+    image: com.example/demo:latest
+    ports:
+      - "9999:9999/tcp"
+  nginx-auto-ssl:
+    image: valian/docker-nginx-auto-ssl
+    name:
+      - nginx-auto-ssl
+    restart:
+      - on-failure
+    ports:
+      - "80:80/tcp"
+      - "443:443/tcp"
+    volumes:
+      - "ssl-data:/etc/resty-auto-ssl"
+    environment:
+      - ALLOWED_DOMAINS: bookstorage.kr
+      - SITES: 'bookstorage.kr=docker-sample:9999;*.bookstorage.kr=docker-sample:9999'
+      - DIFFIE_HELLMAN: true
