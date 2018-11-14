@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  proxy:
+    build: .
+    restart: always
+    environment:
+      CERTBOT_EMAIL: "ksb@bookstorage.kr"
+    ports:
+      - "80:80"
+      - "443:443"
+  spring-boot:
+    image: com.example/demo:latest
+    ports:
+      - "9999:9999/tcp"
